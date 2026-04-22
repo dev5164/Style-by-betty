@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Styled By Betty – Luxury Wig Styling & Installation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --black: #080808;
+      --deep: #0d0d0d;
+      --card: #111111;
+      --border: #1e1e1e;
+      --pink: #f472b6;
+      --pink-bright: #fb7fbf;
+      --pink-dim: #c4547d;
+      --pink-glow: rgba(244, 114, 182, 0.18);
+      --pink-glow-strong: rgba(244, 114, 182, 0.35);
+      --white: #faf5f8;
+      --muted: #888080;
+      --script: 'Great Vibes', cursive;
+      --serif: 'Cormorant Garamond', serif;
+      --sans: 'Jost', sans-serif;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; outline: none; font-family: var(--sans); }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-dim); border-radius: 2px; }
+
+    /* ===== GRAIN OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      padding: 12px 24px;
+      box-shadow: 0 4px 40px rgba(244,114,182,0.08);
+    }
+
+    .nav-brand {
+      font-family: var(--script);
+      font-size: 1.9rem;
+      color: var(--pink);
+      text-shadow: 0 0 20px rgba(244,114,182,0.5);
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--pink); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--pink);
+      color: var(--pink);
+      padding: 9px 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--pink);
+      color: var(--black);
+      box-shadow: 0 0 20px var(--pink-glow-strong);
+    }
+
+    /* hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--pink);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+    /* mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+      background: rgba(8,8,8,0.97);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.77,0,0.175,1);
+    }
+
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover { color: var(--pink); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    /* Radial pink glow bg */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(244,114,182,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--pink);
+      border: 1px solid rgba(244,114,182,0.3);
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+
+    .hero-title {
+      font-family: var(--script);
+      font-size: clamp(3.5rem, 15vw, 7rem);
+      line-height: 1.05;
+      color: var(--white);
+      text-shadow:
+        0 0 40px rgba(244,114,182,0.4),
+        0 0 80px rgba(244,114,182,0.15);
+      animation: fadeUp 0.9s ease forwards;
+      opacity: 0;
+      animation-delay: 0.4s;
+      position: relative;
+    }
+
+    .hero-sub {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 4vw, 1.35rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(250,245,248,0.6);
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      animation: fadeUp 0.9s ease forwards;
+      opacity: 0;
+      animation-delay: 0.6s;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--pink), transparent);
+      margin: 28px auto;
+      animation: fadeUp 0.9s ease forwards;
+      opacity: 0;
+      animation-delay: 0.7s;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dim) 100%);
+      color: var(--black);
+      padding: 15px 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      box-shadow: 0 0 30px rgba(244,114,182,0.4), 0 4px 20px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+      animation: fadeUp 0.9s ease forwards;
+      opacity: 0;
+      animation-delay: 0.85s;
+    }
+
+    .hero-cta:hover {
+      box-shadow: 0 0 50px rgba(244,114,182,0.6), 0 6px 30px rgba(0,0,0,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* hero image strip */
+    .hero-strip {
+      position: relative;
+      width: 100%;
+      margin-top: 56px;
+      animation: fadeUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 1s;
+    }
+
+    .hero-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .hero-img-wrap {
+      aspect-ratio: 2/3;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(244,114,182,0.2);
+      position: relative;
+    }
+
+    .hero-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(244,114,182,0.15) 0%, transparent 60%);
+    }
+
+    .hero-img-wrap img {
+      transition: transform 0.6s ease;
+    }
+
+    .hero-img-wrap:hover img { transform: scale(1.05); }
+
+    /* hero scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.4;
+      animation: fadeIn 1s ease forwards 1.4s;
+    }
+
+    .scroll-hint span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-dot {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--pink), transparent);
+      animation: scrollLine 1.8s ease infinite;
+    }
+
+    /* ===== SECTION UTILITIES ===== */
+    section { padding: 90px 24px; }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--pink);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--pink);
+    }
+
+    .title-line {
+      width: 40px;
+      height: 1px;
+      background: var(--pink);
+      margin: 20px 0 36px;
+      box-shadow: 0 0 8px var(--pink-glow-strong);
+    }
+
+    /* ===== SERVICES ===== */
+    #services { background: var(--deep); }
+
+    .services-header { text-align: center; margin-bottom: 50px; }
+    .services-header .title-line { margin: 20px auto 0; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px 18px 22px;
+      text-align: center;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, var(--pink-glow) 0%, transparent 65%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .service-card:hover { border-color: rgba(244,114,182,0.5); transform: translateY(-3px); }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.1);
+      border: 1px solid rgba(244,114,182,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .service-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .service-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .services-cta {
+      text-align: center;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid var(--pink);
+      color: var(--pink);
+      padding: 13px 32px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: var(--pink);
+      color: var(--black);
+      box-shadow: 0 0 24px var(--pink-glow-strong);
+    }
+
+    .btn-solid {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dim));
+      color: var(--black);
+      padding: 13px 32px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(244,114,182,0.3);
+    }
+
+    .btn-solid:hover {
+      box-shadow: 0 0 36px rgba(244,114,182,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ===== TRUST BAR ===== */
+    .trust-bar {
+      background: linear-gradient(135deg, rgba(244,114,182,0.08) 0%, rgba(196,84,125,0.06) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px 36px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(250,245,248,0.75);
+    }
+
+    .trust-icon {
+      color: var(--pink);
+      font-size: 0.9rem;
+    }
+
+    /* ===== GALLERY ===== */
+    #gallery { padding-bottom: 70px; }
+
+    .gallery-header { text-align: center; margin-bottom: 40px; }
+    .gallery-header .title-line { margin: 20px auto 0; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item:nth-child(1) { grid-row: span 2; }
+    .gallery-item:nth-child(4) { grid-row: span 2; }
+
+    .gallery-item .g-img {
+      aspect-ratio: 3/4;
+      background: var(--card);
+    }
+
+    .gallery-item:nth-child(1) .g-img,
+    .gallery-item:nth-child(4) .g-img {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 250px;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 16px;
+    }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay span {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--pink);
+      letter-spacing: 0.05em;
+    }
+
+    .gallery-item img {
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    .gallery-cta {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(ellipse, rgba(244,114,182,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-inner {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .about-img-wrap {
+      aspect-ratio: 4/3;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      border: 1px solid rgba(244,114,182,0.2);
+      position: relative;
+    }
+
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(244,114,182,0.15) 100%);
+    }
+
+    .about-quote {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      color: rgba(250,245,248,0.9);
+      margin-bottom: 20px;
+      border-left: 2px solid var(--pink);
+      padding-left: 18px;
+    }
+
+    .about-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 36px;
+    }
+
+    .stat {
+      background: var(--card);
+      padding: 20px 10px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--script);
+      font-size: 2.2rem;
+      color: var(--pink);
+      text-shadow: 0 0 16px rgba(244,114,182,0.4);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ===== BOOKING ===== */
+    #booking { position: relative; overflow: hidden; }
+
+    #booking::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at top center, rgba(244,114,182,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .booking-header { text-align: center; margin-bottom: 44px; }
+    .booking-header .title-line { margin: 20px auto 0; }
+
+    .booking-form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 13px 16px;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(244,114,182,0.5);
+      box-shadow: 0 0 16px rgba(244,114,182,0.1);
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f472b6' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .form-group select option {
+      background: var(--card);
+      color: var(--white);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dim));
+      color: var(--black);
+      padding: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin-top: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 24px rgba(244,114,182,0.3);
+    }
+
+    .form-submit:hover {
+      box-shadow: 0 0 40px rgba(244,114,182,0.5);
+      transform: translateY(-2px);
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .form-note span { color: var(--pink); }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--deep); }
+
+    .contact-header { text-align: center; margin-bottom: 44px; }
+    .contact-header .title-line { margin: 20px auto 0; }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(244,114,182,0.4);
+      box-shadow: 0 0 20px rgba(244,114,182,0.06);
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.1);
+      border: 1px solid rgba(244,114,182,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 3px;
+    }
+
+    .contact-info-value {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: #25D366;
+      color: #fff;
+      padding: 15px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      margin-top: 30px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.2);
+    }
+
+    .wa-btn:hover {
+      box-shadow: 0 4px 30px rgba(37,211,102,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 40px 24px 100px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-brand {
+      font-family: var(--script);
+      font-size: 2.5rem;
+      color: var(--pink);
+      text-shadow: 0 0 20px rgba(244,114,182,0.4);
+      margin-bottom: 12px;
+    }
+
+    .footer-tagline {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--pink); }
+
+    .footer-copy {
+      font-size: 0.68rem;
+      color: rgba(136,128,128,0.5);
+    }
+
+    /* ===== FLOATING WHATSAPP ===== */
+    .float-wa {
+      position: fixed;
+      bottom: 28px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      z-index: 998;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: all 0.3s ease;
+      animation: pulse-wa 2.5s ease infinite;
+    }
+
+    .float-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+    }
+
+    .float-wa-label {
+      position: absolute;
+      right: calc(100% + 10px);
+      background: var(--card);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .float-wa:hover .float-wa-label { opacity: 1; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 0.4; }
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 36px rgba(37,211,102,0.7); }
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== DESKTOP ENHANCEMENTS ===== */
+    @media (min-width: 768px) {
+      nav { padding: 20px 48px; }
+      .hamburger { display: none; }
+      .nav-links { display: flex; }
+
+      section { padding: 110px 48px; }
+
+      .hero { padding: 140px 48px 90px; }
+      .hero-images { max-width: 560px; gap: 14px; }
+
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 720px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 700px;
+        gap: 10px;
+      }
+
+      .gallery-item:nth-child(1) { grid-row: span 1; }
+      .gallery-item:nth-child(4) { grid-row: span 1; }
+      .gallery-item .g-img { aspect-ratio: 3/4; height: auto; }
+      .gallery-item:nth-child(1) .g-img,
+      .gallery-item:nth-child(4) .g-img { aspect-ratio: 3/4; height: auto; min-height: unset; }
+
+      .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; max-width: 900px; }
+      .about-img-wrap { margin-bottom: 0; }
+
+      .booking-form { max-width: 560px; }
+      .contact-cards { max-width: 600px; }
+      .trust-bar { flex-direction: row; justify-content: space-between; padding: 28px 48px; }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-images { max-width: 700px; }
+      nav { padding: 20px 72px; }
+      section { padding: 120px 72px; }
+      .hero { padding: 160px 72px 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav id="navbar">
+    <span class="nav-brand">Styled By Betty</span>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#booking" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" class="mm-link">Services</a>
+    <a href="#gallery" class="mm-link">Gallery</a>
+    <a href="#about" class="mm-link">About</a>
+    <a href="#booking" class="mm-link">Book Now</a>
+    <a href="#contact" class="mm-link">Contact</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <span class="hero-badge">✦ Premium Wig Specialist · Oyi, Anambra</span>
+    <h1 class="hero-title">Styled By Betty</h1>
+    <p class="hero-sub">Luxury Wig Styling &amp; Installation</p>
+    <div class="hero-divider"></div>
+    <a href="#booking" class="hero-cta">✦ Book Appointment</a>
+
+    <div class="hero-strip">
+      <div class="hero-images">
+        <div class="hero-img-wrap">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80&auto=format&fit=crop" alt="Wig installation" loading="eager" />
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=400&q=80&auto=format&fit=crop" alt="Hair styling" loading="eager" />
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80&auto=format&fit=crop" alt="Beauty transformation" loading="eager" />
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST BAR ===== -->
+  <div class="trust-bar reveal">
+    <div class="trust-items">
+      <div class="trust-item"><span class="trust-icon">★</span> Premium Quality Wigs</div>
+      <div class="trust-item"><span class="trust-icon">✦</span> Professional Service</div>
+      <div class="trust-item"><span class="trust-icon">♡</span> 100+ Happy Clients</div>
+      <div class="trust-item"><span class="trust-icon">◈</span> Certified Stylist</div>
+    </div>
+  </div>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services">
+    <div class="services-header reveal">
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">Our <em>Services</em></h2>
+      <div class="title-line"></div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">💇🏾</div>
+        <div class="service-name">Wig Customization</div>
+        <div class="service-desc">Tailored to your unique face shape &amp; style</div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">✨</div>
+        <div class="service-name">Frontal Installation</div>
+        <div class="service-desc">Flawless HD &amp; lace frontal installs</div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">👑</div>
+        <div class="service-name">Closure Installation</div>
+        <div class="service-desc">Natural-looking 4×4 &amp; 5×5 closures</div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">🔄</div>
+        <div class="service-name">Wig &amp; Bundle Revamp</div>
+        <div class="service-desc">Breathe new life into your wigs &amp; bundles</div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">🎨</div>
+        <div class="service-name">Wig Coloring</div>
+        <div class="service-desc">Vibrant dyes, balayage &amp; ombre blends</div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">💆🏾</div>
+        <div class="service-name">Wig Maintenance</div>
+        <div class="service-desc">Deep conditioning &amp; professional upkeep</div>
+      </div>
+    </div>
+
+    <div class="services-cta reveal">
+      <a href="#booking" class="btn-solid">Book Now</a>
+      <a href="https://wa.me/2348028464826" class="btn-outline">View Pricing on WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery">
+    <div class="gallery-header reveal">
+      <span class="section-label">Our Work</span>
+      <h2 class="section-title">The <em>Gallery</em></h2>
+      <div class="title-line"></div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&q=80&auto=format&fit=crop" alt="Frontal install" />
+        </div>
+        <div class="gallery-overlay"><span>Frontal Install</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=500&q=80&auto=format&fit=crop" alt="Wig install" />
+        </div>
+        <div class="gallery-overlay"><span>Wig Install</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1600091166971-7f9faad6cc60?w=500&q=80&auto=format&fit=crop" alt="Wig coloring" />
+        </div>
+        <div class="gallery-overlay"><span>Wig Coloring</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=500&q=80&auto=format&fit=crop" alt="Closure install" />
+        </div>
+        <div class="gallery-overlay"><span>Closure Install</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=500&q=80&auto=format&fit=crop" alt="Revamp" />
+        </div>
+        <div class="gallery-overlay"><span>Wig Revamp</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-3">
+        <div class="g-img">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=500&q=80&auto=format&fit=crop" alt="Styling" />
+        </div>
+        <div class="gallery-overlay"><span>Luxury Styling</span></div>
+      </div>
+    </div>
+
+    <div class="gallery-cta reveal">
+      <a href="https://instagram.com/styledby_betty" target="_blank" class="btn-outline">
+        📸 &nbsp;View More on Instagram @styledby_betty
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80&auto=format&fit=crop" alt="Styled By Betty stylist" />
+      </div>
+
+      <div>
+        <span class="section-label reveal">Our Story</span>
+        <h2 class="section-title reveal">Meet <em>Betty</em></h2>
+        <div class="title-line reveal"></div>
+
+        <blockquote class="about-quote reveal">
+          "Every woman deserves to feel beautiful, confident, and effortlessly styled."
+        </blockquote>
+
+        <p class="about-text reveal">
+          Styled By Betty is a professional hair stylist brand based in Oyi, Anambra State — focused on premium wig installations, customization, and beauty transformations. With a passion for detail and a commitment to quality, we specialize in flawless lace installs that look and feel completely natural.
+        </p>
+
+        <p class="about-text reveal">
+          Whether you're looking for a sleek frontal, a vibrant color transformation, or a full wig revamp — we bring your vision to life with care, skill, and luxury results every time.
+        </p>
+
+        <div class="about-stats reveal">
+          <div class="stat">
+            <span class="stat-num">100+</span>
+            <span class="stat-label">Clients Styled</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">3+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">6</span>
+            <span class="stat-label">Services</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKING ===== -->
+  <section id="booking">
+    <div class="booking-header reveal">
+      <span class="section-label">Reserve Your Slot</span>
+      <h2 class="section-title">Book an <em>Appointment</em></h2>
+      <div class="title-line"></div>
+    </div>
+
+    <form class="booking-form" id="bookingForm">
+      <div class="form-row">
+        <div class="form-group reveal reveal-delay-1">
+          <label for="fname">Full Name</label>
+          <input type="text" id="fname" name="name" placeholder="Your name" required />
+        </div>
+        <div class="form-group reveal reveal-delay-2">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000" required />
+        </div>
+      </div>
+
+      <div class="form-group reveal">
+        <label for="service">Select Service</label>
+        <select id="service" name="service" required>
+          <option value="" disabled selected>Choose a service…</option>
+          <option>Wig Customization</option>
+          <option>Frontal Installation</option>
+          <option>Closure Installation</option>
+          <option>Wig & Bundle Revamp</option>
+          <option>Wig Coloring</option>
+          <option>Wig Maintenance</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group reveal reveal-delay-1">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+        <div class="form-group reveal reveal-delay-2">
+          <label for="time">Preferred Time</label>
+          <input type="time" id="time" name="time" />
+        </div>
+      </div>
+
+      <div class="form-group reveal">
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" placeholder="Any special requests or details…"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit reveal">✦ Secure Your Slot</button>
+      <p class="form-note reveal">We'll confirm your appointment via <span>WhatsApp or call</span> within 24 hrs.</p>
+    </form>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="contact-header reveal">
+      <span class="section-label">Reach Out</span>
+      <h2 class="section-title">Get In <em>Touch</em></h2>
+      <div class="title-line"></div>
+    </div>
+
+    <div class="contact-cards">
+      <a href="tel:+2348028464826" class="contact-card reveal">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-info-label">Phone</div>
+          <div class="contact-info-value">+234 802 846 4826</div>
+        </div>
+      </a>
+
+      <a href="https://instagram.com/styledby_betty" target="_blank" class="contact-card reveal reveal-delay-1">
+        <div class="contact-icon">📸</div>
+        <div>
+          <div class="contact-info-label">Instagram</div>
+          <div class="contact-info-value">@styledby_betty</div>
+        </div>
+      </a>
+
+      <div class="contact-card reveal reveal-delay-2">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-info-label">Location</div>
+          <div class="contact-info-value">Oye Ekiti, Ondo State</div>
+        </div>
+      </div>
+
+      <div class="contact-card reveal reveal-delay-3">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-info-label">Hours</div>
+          <div class="contact-info-value">Mon – Sat, 9am – 7pm</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 480px; margin: 0 auto;">
+      <a href="https://wa.me/2348028464826?text=Hi%20Betty!%20I'd%20like%20to%20book%20an%20appointment." target="_blank" class="wa-btn reveal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207 -.242-.579 -.487 -.5 -.669 -.51 -.173 -.008 -.371 -.01 -.57 -.01 -.198 0 -.52 .074 -.792 .372 -.272 .297 -1.04 1.016 -1.04 ２.４７９ ０ １.４６２ １.０６５ ２.８７５ １.２１３ ３.０７４ .１４９ .１９８ ２.０９６ ３.２ ５.０７７ ４.４８７ .７０９ .３０６ １.２６２ .４８９ １.６９４ .６２５ .７１２ .２２７ １.３６ .１９５ １.８７１ .１１８ .５７１ -.０８５ １.７５８ -.７１９ ２.００６ -₁₄₁₃ .₂₄₈ -․₆₉₄ .₂₄₈ -₁₂₈₉ .₁₇₃ -₁․₄₁₃ -․₀₇₄ -․₁₂₄ -․₂₇₂ -․₁₉₈ -․伍柒 -․叁肆柒z"/><path d="M₁₁．玖玖 ₀C₅．叁柒肆 ₀ ₀ 伍．叁柒² ₀ ₁壹．玖捌⁸c₀ ₂．壹¹³．伍⁵⁴ 四．₀⁹⁷ ₁．伍²³ 四．捌²⁴L₀ ²⁴l⁶．³³⁵-¹．⁶⁵⁴C⁸．₀³ ²³．²⁵³ ⁹．玖⁷⁶ ²⁴ ₁¹．玖玖 ²⁴ ₁捌．陆²⁶ ²⁴ ₂⁴ ¹捌．陆²⁸ ₂⁴ 十二．零¹² ₂⁴ 四．叁柒⁴ 十八．陆²⁶ ₀ 十一．玖玖 ₀zm．零壹 廿壹．捌¹⁸c-¹．捌¹³ 慢-³．伍九伍-․四八六-伍．壹³八-壹．四零四l-․叁六九-․二一八-叁．七五五 壹点九八三 壹点零零二-叁点六五六-․二四-․三七五C₂点四八六 十五点五三 C₂点一八三 十三点七九五 C₂点一八三 十二c₀-伍点四一一 四点四零六-玖点八¹七 玖点八¹七 玖点八¹七 C十點八¹八 四點四零六 C十點八¹八 玖點八¹七 C₀ 玖點八¹七 C₀ 玖點八¹七 C₀ 玖點eighteen C₀ 玖點eighteen z"/></svg>
+        Chat with Betty on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-brand">Styled By Betty</div>
+    <p class="footer-tagline">Luxury Wig Styling &amp; Installation · Oye Ekiti, Ondo State</p>
+    <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#booking">Book</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Styled By Betty. All rights reserved.</p>
+  </footer>
+
+  <!-- ===== FLOATING WHATSAPP ===== -->
+  <a href="https://wa.me/2348028464826?text=Hi%20Betty!%20I'd%20like%20to%20book%20an%20appointment." target="_blank" class="float-wa" aria-label="Chat on WhatsApp">
+    <span class="float-wa-label">Book via WhatsApp</span>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.374 0 0 5.372 0 11.988c0 2.113.554 4.097 1.523 5.824L0 24l6.335-1.654C8.03 23.253 9.976 24 11.99 24 18.626 24 24 18.628 24 12.012 24 5.374 18.626 0 11.99 0zm.01 21.818c-1.813 0-3.595-.486-5.138-1.404l-.369-.218-3.755.983 1.002-3.656-.24-.375C2.486 15.53 2.183 13.795 2.183 12c0-5.411 4.406-9.817 9.817-9.817 5.412 0 9.818 4.406 9.818 9.817 0 5.413-4.406 9.818-9.818 9.818z"/></svg>
+  </a>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ─── Navbar scroll effect ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ─── Hamburger / mobile menu ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mm-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ─── Scroll reveal ───
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ─── Booking form → WhatsApp ───
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name    = document.getElementById('fname').value;
+      const phone   = document.getElementById('phone').value;
+      const service = document.getElementById('service').value;
+      const date    = document.getElementById('date').value;
+      const notes   = document.getElementById('notes').value;
+
+      const msg = encodeURIComponent(
+        `Hi Betty! I'd like to book an appointment.\n\n` +
+        `👤 Name: ${name}\n` +
+        `📞 Phone: ${phone}\n` +
+        `💇🏾 Service: ${service}\n` +
+        `📅 Date: ${date}\n` +
+        (notes ? `📝 Notes: ${notes}` : '')
+      );
+
+      window.open(`https://wa.me/2348028464826?text=${msg}`, '_blank');
+    });
+
+    // ─── Set date input min to today ───
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+    }
+  </script>
+</body>
+</html>
